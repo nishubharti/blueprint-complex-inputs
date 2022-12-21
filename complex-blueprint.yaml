@@ -1,4 +1,6 @@
 name: blueprints-complex-inputs
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Cloud-Schematics/vscode-blueprint-schema/master/blueprint_schema.json
+## yaml-language-server: $schema=blueprint_schema.json
 type: blueprint
 schema_version: "1.0.0"
 description: "Sample blueprint to demonstrate passing of complex Terraform variables"
@@ -22,22 +24,21 @@ modules:
   - name: terraform_module1
     module_type: terraform
     source:
-      source_type: github
+      source_type: git
       git:
         git_repo_url: "https://github.com/Cloud-Schematics/blueprint-example-modules/tree/main/tf-inputs-outputs"
         git_branch: "main"
     inputs:
       # default string
-      - resource_group 
+      - name: resource_group 
         value: $blueprint.resource_group
-      - region 
+      - name: region 
         value: $blueprint.region
       - name: TF_VERSION
         value: 1.0
       - name: sample_var
         value: $blueprint.sample_var
         # default string
-
       - name: image_id
         value: ami-image
         # HCL type: list(any) passed as flow scalar double-quoted
@@ -52,46 +53,6 @@ modules:
 
       - name: docker_ports
         value: $blueprint.docker_ports
-        type: |
-          list(object({
-            internal = number
-            external = number
-            protocol = string
-          })
-    outputs:
-      - name: nested_complex
-      - name: test_tuple
-
-  - name: terraform_module2
-    module_type: terraform
-    source:
-      source_type: github
-      git:
-        git_repo_url: "https://github.com/Cloud-Schematics/blueprint-example-modules/tree/main/tf-inputs-outputs"
-        git_branch: "main"
-      catalog:
-    inputs:
-      # default string
-      - name: TF_VERSION
-        value: 1.0
-      - name: sample_var
-        value: $blueprint.sample_var
-        # default string
-
-      - name: image_id
-        value: ami-image
-        # HCL type: list(any) passed as flow scalar double-quoted
-      - name: list_any_flow_scalar
-        value: $blueprint.list_any_flow_scalar
-        type: list(any)
-
-        # HCL type: list(any) passed as block scalar double-quoted
-      - name: list_any_block_scalar
-        value: $blueprint.list_any_block_scalar
-        type: list(any)
-
-      - name: docker_ports
-        value: $module.terraform_module1.nested_complex
         type: |
           list(object({
             internal = number
