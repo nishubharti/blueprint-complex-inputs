@@ -23,7 +23,7 @@ modules:
   - name: terraform_module1
     module_type: terraform
     source:
-      source_type: git
+      source_type: github
       git:
         git_repo_url: "https://github.com/Cloud-Schematics/blueprint-example-modules/tree/main/tf-inputs-outputs"
         git_branch: "main"
@@ -62,7 +62,7 @@ modules:
   - name: terraform_module2
     module_type: terraform
     source:
-      source_type: git
+      source_type: github
       git:
         git_repo_url: "https://github.com/Cloud-Schematics/blueprint-example-modules/tree/main/tf-inputs-outputs"
         git_branch: "main"
